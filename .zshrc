@@ -1,3 +1,16 @@
+################################################################
+# Maintainer:
+#       Edward Fitz Abucay
+#       http://www.vastorigins.com
+#
+# Version:
+#       1.0
+#
+# Repository:
+#       http://github.com/soardex/pastel.git
+#
+################################################################
+
 autoload -U colors
 colors
 

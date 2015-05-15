@@ -1,3 +1,15 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Maintainer:
+"       Edward Fitz Abucay
+"       http://www.vastorigins.com
+"
+" Version:
+"       1.0
+"
+" Repository:
+"       http://github.com/soardex/pastel.git
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
 syntax off
@@ -28,6 +40,10 @@ set splitright
 set splitbelow
 set pastetoggle=<F12>
 set winminheight=0
+
+set nobackup
+set nowb
+set noswapfile
 
 set history=1000
 set hidden

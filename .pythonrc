@@ -1,5 +1,18 @@
 # vim: set sts=4 sw=4 ts=4
 
+################################################################
+# Maintainer:
+#       Edward Fitz Abucay
+#       http://www.vastorigins.com
+#
+# Version:
+#       1.0
+#
+# Repository:
+#       http://github.com/soardex/pastel.git
+#
+################################################################
+
 import sys
 import os
 import atexit
