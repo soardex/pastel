@@ -1,3 +1,4 @@
+.cache
 .gitconfig
 .histfile
 .lesshst
@@ -7,6 +8,7 @@
 .viminfo
 .zcompdump
 .zshrc.zni
+.zsh_history
 bin
 tps
 yocto
