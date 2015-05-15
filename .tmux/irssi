@@ -1,0 +1,4 @@
+neww -n irssi 'TERM="screen-256color" irssi'
+splitw -h -l 28 'sleep 3; cat ~/.irssi/nicklistfifo'
+selectw -t irssi
+selectp -t 0
