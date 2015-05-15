@@ -1,0 +1,12 @@
+.gitconfig
+.histfile
+.lesshst
+.python_history
+.repo_.gitconfig.json
+.repoconfig
+.viminfo
+.zcompdump
+.zshrc.zni
+bin
+tps
+yocto
