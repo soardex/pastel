@@ -40,5 +40,6 @@ alias ls="ls --color=auto"
 alias ll="ls -lah"
 alias vi="vim"
 
+export PYTHONSTARTUP=$HOME/.pythonrc
 export TERM="xterm-256color"
 export PATH=$HOME/bin:$PATH

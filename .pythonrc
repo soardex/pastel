@@ -1,0 +1,31 @@
+# vim: set sts=4 sw=4 ts=4
+
+import sys
+import os
+import atexit
+import rlcompleter
+import readline
+
+# history
+HISTFILE = '%s/.python_history' % os.environ['HOME']
+
+if os.path.exists(HISTFILE):
+    readline.read_history_file(HISTFILE)
+
+readline.set_history_length(300)
+atexit.register(lambda :readline.write_history_file(HISTFILE))
+
+# prompts
+if os.environ.get('SSH_CONNECTION'):
+    host = os.environ['SSH_CONNECTION'].split()[-2]
+    sys.ps1 = '[o]# '
+    sys.ps2 = '[o]. '
+else:
+    sys.ps1 = '[c]# '
+    sys.ps2 = '[c]. '
+
+# completion
+if 'libedit' in readline.__doc__:
+    readline.parse_and_bind('bind ^I rl_complete')
+else:
+    readline.parse_and_bind('tab: complete')
