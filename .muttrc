@@ -1,142 +1,41 @@
-set imap_user='fizzafruit@gmail.com'
-set imap_pass=''
-set smtp_url='smtps://fizzafruit@smtp.gmail.com:587/'
-set smtp_pass=''
-set from='fizzafruit@gmail.com'
-set realname='Fizz Afruit'
+set imap_user                            = 'fizzafruit@gmail.com'
+set imap_pass                            = ''
+set smtp_url                             = 'smtps://fizzafruit@smtp.gmail.com:587/'
+set smtp_pass                            = ''
+set from                                 = 'fizzafruit@gmail.com'
+set realname                             = 'Fizz Afruit'
+set editor                               = 'vim'
+set folder                               = 'imaps://imap.gmail.com:993/'
+set spoolfile                            = '+inbox'
+set postponed                            = '+drafts'
+set record                               = '+sent'
+set hostname                             = 'vine'
+set mail_check                           = 120
+set timeout                              = 300
+set imap_keepalive                       = 300
+set edit_headers                         = yes
 
-set editor='vim'
+set alias_file                           = ~/.mutt/aliases
+set header_cache                         = ~/.mutt/cache/headers
+set message_cachedir                     = ~/.mutt/cache/bodies
+set certificate_file                     = ~/.mutt/certificates
+set signature                            = ~/.mutt/signature
 
-# Pre-setup
-# mkdir -p ~/Mail/{Inbox,Drafts,Sent}/{cur,new,tmp}
-
-#set folder='~/Mail'
-set folder='imaps://imap.gmail.com:993/'
-set spoolfile='+INBOX'
-set postponed='+[Gmail]/Drafts'
-set record='+[Gmail]/Sent Mail'
-
+set move                                 = no
+set include                              = yes
+set sort                                 = threads
+set sort_aux                             = reverse-last-date-received
+set auto_tag                             = yes
 set imap_check_subscribed
-set hostname=mail.blueprintgaming.com
-set mail_check=120
-set timeout=300
-set imap_keepalive=300
-set edit_headers=yes
-
-# Pre-setup
-# mkdir -p ~/.mutt/cache/headers
-# mkdir -p ~/.mutt/cache/bodies
-# touch ~/.mutt/certificates
-
-set header_cache=~/.mutt/cache/headers
-set message_cachedir=~/.mutt/cache/bodies
-set certificate_file=~/.mutt/certificates
-
-set move=no
-set include=yes
-set sort=threads
-set sort_aux=reverse-last-date-received
-set auto_tag=yes
 hdr_order Date From To Cc
 alternative_order text/plain text/html *
 
 auto_view text/html
 auto_view text/calendar
 
-set charset='utf-8'
-set send_charset='utf-8'
+set charset                              = 'utf-8'
+set send_charset                         = 'utf-8'
+set attribution                          = '* <%a> wrote:\n'
+set indent_string                        = '> '
 
-set attribution='* <%a> wrote:\n'
-set indent_string='> '
-
-# basic
-
-color normal        color241        color234
-color error         color160        color234
-color tilde         color235        color234
-color message       color37         color234
-color markers       color160        color254
-color attachment    color254        color234
-color search        color61         color234
-color status        color241        color235
-color indicator     color234        color136
-color tree          color136        color234
-
-# basic monocolor screen
-
-mono  bold          bold
-mono  underline     underline
-mono  indicator     reverse
-mono  error         bold
-
-# index
-
-color index         color160        color234        "~A"                        # all messages
-color index         color166        color234        "~E"                        # expired messages
-color index         color33         color234        "~N"                        # new messages
-color index         color33         color234        "~O"                        # old messages
-color index         color61         color234        "~Q"                        # messages that have been replied to
-color index         color240        color234        "~R"                        # read messages
-color index         color33         color234        "~U"                        # unread messages
-color index         color33         color234        "~U~$"                      # unread, unreferenced messages
-color index         color241        color234        "~v"                        # messages part of a collapsed thread
-color index         color241        color234        "~P"                        # messages from me
-color index         color37         color234        "~p!~F"                     # messages to me
-color index         color37         color234        "~N~p!~F"                   # new messages to me
-color index         color37         color234        "~U~p!~F"                   # unread messages to me
-color index         color240        color234        "~R~p!~F"                   # messages to me
-color index         color160        color234        "~F"                        # flagged messages
-color index         color160        color234        "~F~p"                      # flagged messages to me
-color index         color160        color234        "~N~F"                      # new flagged messages
-color index         color160        color234        "~N~F~p"                    # new flagged messages to me
-color index         color160        color234        "~U~F~p"                    # new flagged messages to me
-color index         color235        color160        "~D"                        # deleted messages
-color index         color245        color234        "~v~(!~N)"                  # collapsed thread with no unread
-color index         color136        color234        "~v~(~N)"                   # collapsed thread with some unread
-color index         color64         color234        "~N~v~(~N)"                 # collapsed thread with unread parent
-
-# status background
-
-color index         color160        color235        "~v~(~F)!~N"                # collapsed thread with flagged, no unread
-color index         color136        color235        "~v~(~F~N)"                 # collapsed thread with some unread & flagged
-color index         color64         color235        "~N~v~(~F~N)"               # collapsed thread with unread parent & flagged
-color index         color64         color235        "~N~v~(~F)"                 # collapsed thread with unread parent, no unread inside, but some flagged
-color index         color37         color235        "~v~(~p)"                   # collapsed thread with unread parent, no unread inside, some to me directly
-color index         color136        color160        "~v~(~D)"                   # thread with deleted (doesn't differentiate between all or partial)
-
-# message headers
-
-color index         color160        color235        "~v~(~F)!~N"                # collapsed thread with flagged, no unread
-color index         color136        color235        "~v~(~F~N)"                 # collapsed thread with some unread & flagged
-color index         color64         color235        "~N~v~(~F~N)"               # collapsed thread with unread parent & flagged
-color index         color64         color235        "~N~v~(~F)"                 # collapsed thread with unread parent, no unread inside, but some flagged
-color index         color37         color235        "~v~(~p)"                   # collapsed thread with unread parent, no unread inside, some to me directly
-color index         color136        color160        "~v~(~D)"                   # thread with deleted (doesn't differentiate between all or partial)
-
-# body
-color quoted        color33         color234
-color quoted1       color37         color234
-color quoted2       color136        color234
-color quoted3       color160        color234
-color quoted4       color166        color234
-
-color signature     color240        color234
-color bold          color235        color234
-color underline     color235        color234
-color normal        color244        color234
-
-color body          color245        color234        "[;:][-o][)/(|]"    # emoticons
-color body          color245        color234        "[;:][)(|]"         # emoticons
-color body          color245        color234        "[*]?((N)?ACK|CU|LOL|SCNR|BRB|BTW|CWYL|\
-                                                     |FWIW|vbg|GD&R|HTH|HTHBE|IMHO|IMNSHO|\
-                                                     |IRL|RTFM|ROTFL|ROFL|YMMV)[*]?"
-color body          color245        color234        "[ ][*][^*]*[*][ ]?" # more emoticon?
-color body          color245        color234        "[ ]?[*][^*]*[*][ ]" # more emoticon?
-
-# PGP
-
-color body          color160        color234        "(BAD signature)"
-color body          color37         color234        "(Good signature)"
-color body          color234        color234        "^gpg: Good signature .
-
-macro index,pager D "<save-message>=[Gmail]/Trash<enter><enter><refresh>" "Trash Message"
+source ~/.mutt/default-theme.muttrc
