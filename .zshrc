@@ -64,6 +64,7 @@ PROMPT="[%{$fg[cyan]%}%n%{$fg[white]%}:%{$fg[green]%}%m%{$fg[white]%} %~]%# "
 alias ls="ls --color=auto"
 alias ll="ls -lah"
 alias vi="vim"
+alias gdb="gdb -silent"
 alias irssi="TERM=screen-256color irssi"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
