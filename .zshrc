@@ -66,7 +66,12 @@ alias ll="ls -lah"
 alias vi="vim"
 alias gdb="gdb -silent"
 alias irssi="TERM=screen-256color irssi"
+alias pacman-upd="pacman -Syu --noconfirm"
+alias pacman-get="pacman -S --noconfirm"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 export TERM="xterm-256color"
 export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/plugins/ruby-build/bin:$PATH
+
+eval "$(rbenv init -)"
