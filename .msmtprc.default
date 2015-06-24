@@ -1,0 +1,23 @@
+defaults
+logfile ~/.msmtp.log
+
+account gmail
+host smtp.gmail.com
+tls on
+tls_starttls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+port 587
+auth login
+from fizzafruit@gmail.com
+user fizzafruit@gmail.com
+password secret
+
+account qq-mail
+host smtp.qq.com
+port 465
+auth login
+from soardex@qq.com
+user soardex@qq.com
+password secret
+
+account default : gmail
