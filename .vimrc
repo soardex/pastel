@@ -1,15 +1,12 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer:
-"       Edward Fitz Abucay
+"       Edward Fitz Bucud Abucay
 "       http://www.vastorigins.com
 "
 " Version:
-"       1.0
+"       1.2
 "
 " Repository:
 "       http://github.com/soardex/pastel.git
-"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
 syntax off
@@ -32,7 +29,7 @@ set encoding=utf-8
 scriptencoding utf-8
 
 set nu
-set hlsearch
+set nohlsearch
 set nowrap
 set autoindent
 set expandtab
@@ -73,7 +70,10 @@ set wildmode=list:longest,full
 set listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
 set list
 
+" change from to header file
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+" split and buffers mapping
 map <leader>ew :e %%
 map <leader>es :sp %%
 map <leader>ev :vsp %%
@@ -83,13 +83,24 @@ vnoremap < <gv
 vnoremap > >gv
 vnoremap . :normal .<CR>
 
+" tags directories
 set tags=./tags,~/.vim/tags
 
+" nerdtree
 nmap <silent> <C-E> :NERDTreeToggle<CR>
 
+" save and quit shortcuts
 nmap <F2> :w<CR>
 nmap <F4> :q<CR>
 
+" 2-character search motion easymotion
+nmap s <Plug>(easymotion-s2)
+nmap t <Plug>(easymotion-t2)
+
+" enable sudo saving
+cmap W w !sudo tee % > /dev/null
+
+" vim theme
 hi IncSearch ctermfg=65 ctermbg=114 cterm=NONE
 hi WildMenu ctermfg=65 ctermbg=114 cterm=NONE
 hi SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE
