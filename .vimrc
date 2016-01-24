@@ -98,7 +98,7 @@ nmap s <Plug>(easymotion-s2)
 nmap t <Plug>(easymotion-t2)
 
 " enable sudo saving
-cmap W w !sudo tee % > /dev/null
+cmap w!! w !sudo tee % > /dev/null
 
 " vim theme
 hi IncSearch ctermfg=65 ctermbg=114 cterm=NONE
