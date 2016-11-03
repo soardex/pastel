@@ -59,7 +59,7 @@ unsetopt beep			# no bell on error
 unsetopt hist_beep		# no bell on error on history
 
 setopt PROMPT_SUBST     # allow parameter expansion, command substitution and arithmetic expansions
-PROMPT="[%{$fg[cyan]%}%n%{$fg[white]%}:%{$fg[green]%}%m%{$fg[white]%} %~]%# "
+PROMPT="%{$fg[white]%}[%{$fg[cyan]%}%n%{$fg[white]%}:%{$fg[green]%}%m%{$fg[white]%} %~]%#%{$reset_color%} "
 
 alias ls="ls --color=auto"
 alias ll="ls -lah"
@@ -72,6 +72,4 @@ alias pacman-get="pacman -S --noconfirm"
 export PYTHONSTARTUP=$HOME/.pythonrc
 export TERM="xterm-256color"
 export PATH=$HOME/bin:$PATH
-export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/plugins/ruby-build/bin:$PATH
 
-eval "$(rbenv init -)"
