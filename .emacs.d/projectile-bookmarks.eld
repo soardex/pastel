@@ -1,0 +1,1 @@
+("/srv/play/" "/opt/pastel/")

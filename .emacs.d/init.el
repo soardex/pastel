@@ -36,6 +36,14 @@
 (column-number-mode t)
 (size-indication-mode t)
 
+;; enable linum
+(add-hook 'find-file-hook (lambda () (linum-mode t)))
+(add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+(defun linum-format-func (line)
+  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+     (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+(setq linum-format 'linum-format-func)
+
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -52,10 +60,11 @@
  use-package-always-ensure t
  sentence-end-double-space nil)
 
+;; encoding settings
+(set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-(global-linum-mode t)
 
 ;; buffer local variables
 (setq-default
@@ -67,20 +76,31 @@
 ;; global keybindings
 (global-unset-key (kbd "C-z"))
 
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/solarized")
+
 ;; the package manager
 (require 'package)
 (setq
  package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                     ("org" . "http://orgmode.org/elpa/")
                     ("melpa" . "http://melpa.org/packages/")
-                    ("melpa-stable" . "http://stable.melpa.org/packages/"))
+                    ("melpa-stable" . "http://stable.melpa.org/packages/")
+                    ("marmalade" . "http://marmalade-repo.org/packages/"))
  package-archive-priorities '(("melpa-stable" . 1)))
 
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents)
   (package-install 'use-package))
-(require 'use-package)
+(eval-when-compile
+  (require 'use-package))
+
+(require 'diminish)      ;; if :diminish is used
+(require 'bind-key)      ;; if any :bind variant is used
+
+(use-package org
+  :ensure t
+  :pin gnu)
 
 (use-package ensime
   :ensure t
@@ -104,11 +124,28 @@
           helm-quick-update t
           helm-M-x-requires-pattern nil
           helm-ff-skip-boring-files t)
-    (helm-mode))
-  :bind (("C-c h" . helm-mini)
-         ("C-h a" . helm-apropos)
+
+    (use-package helm-ag
+      :ensure t
+      :bind ("C-c a" . helm-ag))
+
+    (use-package helm-descbinds
+      :ensure t
+      :bind ("C-h b" . helm-descbinds))
+
+    (use-package helm-projectile
+      :ensure t
+      :bind ("C-c h" . helm-projectile))
+
+    (use-package helm-swoop
+      :ensure t
+      :bind ("C-c o" . helm-swoop))
+
+    (helm-mode t))
+  :bind (("C-h a" . helm-apropos)
          ("C-x C-b" . helm-buffers-list)
-         ("C-x b" . helm-buffers-list)
+         ("C-x b" . helm-mini)
+         ("C-x p" . helm-top)
          ("M-y" . helm-show-kill-ring)
          ("M-x" . helm-M-x)
          ("C-x c o" . helm-occur)
@@ -119,17 +156,43 @@
 ;; disables ido mode
 (ido-mode -1)
 
-(use-package helm-swoop
-  :bind
-  (("C-S-s" . helm-swoop)))
-
 (use-package undo-tree
   :diminish undo-tree-mode
+  :ensure t
   :config
   (progn
-    (global-undo-tree-mode)
+    (global-undo-tree-mode t)
     (setq undo-tree-visualizer-timestamps t
           undo-tree-visuzlizer-diff t)))
+
+(use-package projectile
+  :diminish projectile-mode
+  :ensure t
+  :config
+  (projectile-global-mode t))
+
+(use-package company
+  :diminish company-mode
+  :ensure t)
+
+(use-package magit
+  :ensure t)
+
+(use-package emmet-mode
+  :ensure t
+  :defer 2)
+
+(use-package smartparens
+  :diminish smartparens-mode
+  :ensure t
+  :init
+  (progn
+    (require 'smartparens-config)
+    (smartparens-global-mode t)))
+
+(set-frame-parameter nil 'background-mode 'dark)
+(set-terminal-parameter nil 'background-mode 'dark)
+(load-theme 'solarized t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -138,7 +201,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (0blayout org dash evil helm-projectile projectile magit solarized-theme use-package helm evil-visual-mark-mode ensime))))
+    (smartparens org dash evil helm-projectile projectile magit use-package helm evil-visual-mark-mode ensime))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
