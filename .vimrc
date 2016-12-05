@@ -1,5 +1,5 @@
 " Maintainer:
-"       Edward Fitz Bucud Abucay
+"       Edward Fitz Abucay <eabucay@vastorigins.net>
 "       http://www.vastorigins.com
 "
 " Version:
@@ -35,7 +35,7 @@ set autoindent
 set expandtab
 set splitright
 set splitbelow
-set pastetoggle=<F12>
+set pastetoggle=<F3>
 set winminheight=0
 
 set nobackup
@@ -46,8 +46,12 @@ set history=1000
 set hidden
 
 set tabstop=4
-set shiftwidth=4
 set softtabstop=4
+set shiftwidth=4
+
+autocmd Filetype scala setlocal ts=2 sts=2 sw=2 et
+autocmd Filetype html setlocal ts=2 sts=2 sw=2 et
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2 et
 
 set showmode
 

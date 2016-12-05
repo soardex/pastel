@@ -1,0 +1,3 @@
+%packager ffimusic
+%_topdir /home/vagrant/rpmbuild
+%_tmppath /home/vagrant/rpmbuild/TMP
