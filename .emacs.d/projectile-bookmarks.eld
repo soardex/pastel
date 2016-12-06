@@ -1,1 +1,1 @@
-("/srv/play/" "/opt/pastel/")
+("/opt/pastel/" "/srv/play/")

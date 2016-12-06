@@ -4,6 +4,9 @@
 (defvar pastel-dir (file-name-directory load-file-name)
   "The root dir of the Emacs Pastel distribution.")
 
+;; always load newest byte code
+(setq load-prefer-newer t)
+
 ;; set user information
 (setq user-full-name "Edward Fitz Abucay"
       user-mail-address "eabucay@vastorigins.net")
@@ -41,7 +44,7 @@
 (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
 (defun linum-format-func (line)
   (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-     (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+    (propertize (format (format "%%%dd " w) line) 'face 'linum)))
 (setq linum-format 'linum-format-func)
 
 ;; enable y/n answers
@@ -55,6 +58,7 @@
  user-mail-address "eabucay@vastorigins.net"
  create-lockfiles nil
  make-backup-files nil
+ auto-save-default nil
  scroll-error-top-bottom t
  show-paren-delay 0.5
  use-package-always-ensure t
@@ -67,8 +71,7 @@
 (prefer-coding-system 'utf-8)
 
 ;; buffer local variables
-(setq-default
- c-basic-offset 4)
+(setq-default c-basic-offset 2)
 
 ;; modes
 (electric-indent-mode 0)
@@ -169,7 +172,10 @@
   :diminish projectile-mode
   :ensure t
   :config
-  (projectile-global-mode t))
+  (progn
+    (setq projectile-enable-caching t
+          projectile-verbose nil)
+    (projectile-global-mode t)))
 
 (use-package company
   :diminish company-mode
@@ -189,6 +195,46 @@
   (progn
     (require 'smartparens-config)
     (smartparens-global-mode t)))
+
+(use-package uniquify
+  :ensure nil
+  :config
+  (progn
+    (setq uniquify-buffer-name-style 'forward
+          uniquify-separator "/"
+          uniquify-after-kill-buffer-p t
+          uniquify-ignore-buffers-re "^\\*")))
+
+(use-package recentf
+  :config
+  (progn
+    (setq recentf-max-saved-items 500
+          recentf-max-menu-items 15
+          recentf-auto-cleanup 'never)
+    (recentf-mode t)))
+
+(use-package saveplace
+  :init (save-place-mode t))
+
+(use-package savehist
+  :config
+  (progn
+    (setq savehist-additional-variables
+          '(search-ring regexp-search-ring comint-input-ring)
+          savehist-autosave-interval 60)
+    (savehist-mode t)))
+
+(use-package dired
+  :ensure nil
+  :config
+  (progn
+    (put 'dired-find-alternate-file 'disabled nil)
+    (setq dired-recursive-deletes 'always
+          dired-recursive-copies 'always
+          dired-dwim-target t
+          dired-use-ls-dired nil)
+    (use-package dired-x
+      :ensure nil)))
 
 (set-frame-parameter nil 'background-mode 'dark)
 (set-terminal-parameter nil 'background-mode 'dark)
