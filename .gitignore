@@ -27,6 +27,3 @@
 .mutt/cache/bodies/*
 .mutt/cache/headers/*
 
-bin
-repo
-crawler

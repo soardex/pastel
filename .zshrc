@@ -4,7 +4,7 @@
 #       http://www.vastorigins.com
 #
 # Version:
-#       1.0
+#       1.2
 #
 # Repository:
 #       http://github.com/soardex/pastel.git
@@ -61,15 +61,19 @@ unsetopt hist_beep		# no bell on error on history
 setopt PROMPT_SUBST     # allow parameter expansion, command substitution and arithmetic expansions
 PROMPT="%{$fg[white]%}[%{$fg[cyan]%}%n%{$fg[white]%}:%{$fg[green]%}%m%{$fg[white]%} %~]%#%{$reset_color%} "
 
-alias ls="ls --color=auto"
+alias ls="ls -G"
 alias ll="ls -lah"
 alias vi="vim"
+alias pi="vim"
 alias gdb="gdb -silent"
-alias irssi="TERM=screen-256color irssi"
-alias pacman-upd="pacman -Syu --noconfirm"
-alias pacman-get="pacman -S --noconfirm"
+alias irssi="TERM=xterm-256color irssi"
+alias tmux="TERM=xterm-256color tmux"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 export TERM="xterm-256color"
-export PATH=$HOME/bin:$PATH
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=/opt/local/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
+export VAGRANT_HOME=/opt/remote/Vagrant/.vagrant
 
+bindkey -e
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
