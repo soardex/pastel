@@ -39,14 +39,6 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-;; enable linum
-(add-hook 'find-file-hook (lambda () (linum-mode t)))
-(add-hook 'org-mode-hook (lambda () (linum-mode 0)))
-(defun linum-format-func (line)
-  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-    (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-(setq linum-format 'linum-format-func)
-
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -72,6 +64,12 @@
 
 ;; buffer local variables
 (setq-default c-basic-offset 2)
+
+;; for buffer garbled
+(add-hook 'isearch-update-post-hook 'redraw-display)
+
+;; suppress ad-redefinition warnings
+(setq ad-redefinition-action 'accept)
 
 ;; modes
 (electric-indent-mode 0)
