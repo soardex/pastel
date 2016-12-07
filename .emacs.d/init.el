@@ -69,7 +69,7 @@
 (add-hook 'isearch-update-post-hook 'redraw-display)
 
 ;; suppress ad-redefinition warnings
-(setq ad-redefinition-action 'accept)')
+(setq ad-redefinition-action 'accept)
 
 ;; modes
 (electric-indent-mode 0)
