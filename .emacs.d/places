@@ -1,4 +1,6 @@
 ;;; -*- coding: utf-8 -*-
-(("/opt/pastel/.emacs.d/init.el" . 5857)
+(("/Users/eabucay/.emacs.d/elpa/color-theme-solarized-20160626.743/color-theme-solarized-autoloads.el" . 1544)
+ ("/Users/eabucay/.emacs.d/elpa/color-theme-20080305.34/color-theme-autoloads.el" . 4779)
+ ("/opt/pastel/.emacs.d/init.el" . 5857)
  ("/opt/pastel/.emacs.d/"
   (dired-filename . "/opt/pastel/.emacs.d/auto-save-list")))
