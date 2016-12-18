@@ -1,3 +1,5 @@
+;; -*- mode: emacs-lisp; tab-width: 2; -*-
+
 (when (version< emacs-version "25.1")
   (error "Pastel requires at least GNU Emacs 25.1, but you're running %s" emacs-version))
 
@@ -6,6 +8,13 @@
 
 ;; always load newest byte code
 (setq load-prefer-newer t)
+
+(if (display-graphic-p)
+    (progn
+      (setq initial-frame-alist
+            '((width . 160) (height . 50))
+            default-frame-alist
+            '((width . 160) (height . 50)))))
 
 ;; set user information
 (setq user-full-name "Edward Fitz Abucay"
@@ -27,6 +36,13 @@
 (setq tab-always-indent 'complete)
 
 (menu-bar-mode -1)                      ;; remove the menu bar
+(global-hl-line-mode t)                 ;; highlight the current line
+
+(if (display-graphic-p)
+    (progn
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)
+      (blink-cursor-mode -1)))
 
 ;; disable bell ring
 (setq ring-bell-function 'ignore)
@@ -46,8 +62,6 @@
 (setq
  initial-scratch-message nil
  initial-major-mode 'org-mode
- user-full-name "Edward Fitz Abucay"
- user-mail-address "eabucay@vastorigins.net"
  create-lockfiles nil
  make-backup-files nil
  auto-save-default nil
@@ -66,7 +80,7 @@
 (setq-default c-basic-offset 2)
 
 ;; for buffer garbled
-(add-hook 'isearch-update-post-hook 'redraw-display)
+;;(add-hook 'isearch-update-post-hook 'redraw-display)
 
 ;; suppress ad-redefinition warnings
 (setq ad-redefinition-action 'accept)
@@ -76,8 +90,6 @@
 
 ;; global keybindings
 (global-unset-key (kbd "C-z"))
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/solarized")
 
 ;; the package manager
 (require 'package)
@@ -107,10 +119,18 @@
   :ensure t
   :pin melpa-stable)
 
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode t))
+;;(use-package evil
+;;  :ensure t
+;;  :config
+;;  (progn
+;;    (define-key evil-normal-state-map [escape] 'keyboard-quit)
+;;    (define-key evil-visual-state-map [escape] 'keyboard-quit)
+;;    (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+;;    (evil-mode t)))
 
 ;; enable helm
 (use-package helm
@@ -234,9 +254,75 @@
     (use-package dired-x
       :ensure nil)))
 
+(use-package anzu
+  :diminish anzu-mode
+  :ensure t
+  :bind (("M-%" . anzu-query-replace)
+         ("C-M-%" . anzu-query-replace-regexp))
+  :init
+  (global-anzu-mode +1)
+  :config
+  (progn
+    (set-face-attribute 'anzu-mode-line nil
+                        :foreground nil :weight 'bold)
+    (define-key isearch-mode-map [remap isearch-query-replace]  #'anzu-isearch-query-replace)
+    (define-key isearch-mode-map [remap isearch-query-replace-regexp] #'anzu-isearch-query-replace-regexp)))
+
+(use-package avy
+  :ensure t
+  :config
+  (avy-setup-default))
+
+(use-package linum-relative
+  :ensure t
+  :init
+  (add-hook 'find-file-hook 'linum-mode)
+  :config
+  (progn
+    (setq linum-format 'linum-relative
+          linum-relative-current-symbol "->")))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
+
+(use-package whitespace
+  :init
+  (dolist (hook '(prog-mode-hook text-mode-hook))
+    (add-hook hook #'whitespace-mode))
+  (add-hook 'before-save-hook #'whitespace-cleanup)
+  :config
+  (progn
+    (setq whitespace-line-column 80
+          whitespace-style
+          '(face tabs empty trailing lines-tail))))
+
+(use-package aggressive-indent
+  :ensure t
+  :config
+  (progn
+    (global-aggressive-indent-mode t)
+    (add-to-list 'aggressive-indent-excluded-modes 'html-mode)))
+
 (set-frame-parameter nil 'background-mode 'dark)
 (set-terminal-parameter nil 'background-mode 'dark)
-(load-theme 'solarized t)
+
+;;(use-package color-theme
+;;  :ensure t
+;;  :config
+;;  (progn
+;;    (use-package color-theme-solarized
+;;      :ensure t
+;;      :init
+;;      (load-theme 'solarized t))))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode t))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
