@@ -3,7 +3,7 @@
 "       http://www.vastorigins.com
 "
 " Version:
-"       1.2
+"       1.3
 "
 " Repository:
 "       http://github.com/soardex/pastel.git
@@ -49,9 +49,11 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
-autocmd Filetype scala setlocal ts=2 sts=2 sw=2 et
-autocmd Filetype html setlocal ts=2 sts=2 sw=2 et
-autocmd Filetype ruby setlocal ts=2 sts=2 sw=2 et
+let g:ackprg='ag --vimgrep'
+let g:acp_enableAtStartup=0
+let g:neocomplete#enable_at_startup=1
+let g:neocomplete#enable_smart_case=1
+let g:neocomplete#sources#syntax#min_keyword_length=3
 
 set showmode
 
@@ -74,7 +76,7 @@ set wildmode=list:longest,full
 set listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
 set list
 
-" change from to header file
+" change from source to header file
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " split and buffers mapping
@@ -90,8 +92,10 @@ vnoremap . :normal .<CR>
 " tags directories
 set tags=./tags,~/.vim/tags
 
-" nerdtree
+" toggles
 nmap <silent> <C-E> :NERDTreeToggle<CR>
+nmap <silent> <F7> :GundoToggle<CR>
+nmap <silent> <F8> :TagbarToggle<CR>
 
 " save and quit shortcuts
 nmap <F2> :w<CR>
@@ -104,79 +108,85 @@ nmap t <Plug>(easymotion-t2)
 " enable sudo saving
 cmap w!! w !sudo tee % > /dev/null
 
-" vim theme
-hi IncSearch ctermfg=65 ctermbg=114 cterm=NONE
-hi WildMenu ctermfg=65 ctermbg=114 cterm=NONE
-hi SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE
-hi SpecialComment ctermfg=71 ctermbg=236 cterm=bold
-hi Typedef ctermfg=114 ctermbg=NONE cterm=bold
-hi Title ctermfg=114 ctermbg=236 cterm=bold
-hi Folded ctermfg=71 ctermbg=NONE cterm=NONE
-hi PreCondit ctermfg=114 ctermbg=NONE cterm=bold
-hi Include ctermfg=114 ctermbg=NONE cterm=bold
-hi TabLineSel ctermfg=120 ctermbg=65 cterm=bold
-hi StatusLineNC ctermfg=10 ctermbg=NONE cterm=bold,underline
-hi NonText ctermfg=59 ctermbg=NONE cterm=NONE
-hi DiffText ctermfg=114 ctermbg=65 cterm=bold
-hi ErrorMsg ctermfg=196 ctermbg=NONE cterm=NONE
-hi Debug ctermfg=71 ctermbg=236 cterm=bold
-hi PMenuSbar ctermfg=NONE ctermbg=235 cterm=NONE
-hi Identifier ctermfg=114 ctermbg=NONE cterm=NONE
-hi SpecialChar ctermfg=71 ctermbg=236 cterm=bold
-hi Conditional ctermfg=114 ctermbg=NONE cterm=bold
-hi StorageClass ctermfg=114 ctermbg=NONE cterm=bold
-hi Todo ctermfg=236 ctermbg=71 cterm=NONE
-hi Special ctermfg=71 ctermbg=236 cterm=bold
-hi LineNr ctermfg=65 ctermbg=NONE cterm=NONE
-hi StatusLine ctermfg=120 ctermbg=65 cterm=bold
-hi Normal ctermfg=71 ctermbg=NONE cterm=NONE
-hi Label ctermfg=114 ctermbg=NONE cterm=bold
-hi PMenuSel ctermfg=114 ctermbg=65 cterm=NONE
-hi Search ctermfg=236 ctermbg=71 cterm=NONE
-hi Delimiter ctermfg=71 ctermbg=236 cterm=bold
-hi Statement ctermfg=120 ctermbg=NONE cterm=NONE
-hi Comment ctermfg=65 ctermbg=NONE cterm=NONE
-hi Character ctermfg=120 ctermbg=NONE cterm=NONE
-hi Float ctermfg=114 ctermbg=238 cterm=NONE
-hi Number ctermfg=114 ctermbg=238 cterm=NONE
-hi Boolean ctermfg=114 ctermbg=238 cterm=NONE
-hi Operator ctermfg=114 ctermbg=NONE cterm=bold
-hi CursorLine ctermfg=NONE ctermbg=NONE cterm=underline
-hi TabLineFill ctermfg=NONE ctermbg=NONE cterm=bold
-hi Question ctermfg=71 ctermbg=NONE cterm=NONE
-hi WarningMsg ctermfg=114 ctermbg=NONE cterm=NONE
-hi VisualNOS ctermfg=71 ctermbg=NONE cterm=NONE
-hi DiffDelete ctermfg=236 ctermbg=236 cterm=NONE
-hi ModeMsg ctermfg=71 ctermbg=NONE cterm=NONE
-hi Define ctermfg=114 ctermbg=NONE cterm=bold
-hi Function ctermfg=114 ctermbg=NONE cterm=NONE
-hi FoldColumn ctermfg=65 ctermbg=234 cterm=NONE
-hi PreProc ctermfg=114 ctermbg=NONE cterm=bold
-hi Visual ctermfg=114 ctermbg=65 cterm=NONE
-hi MoreMsg ctermfg=71 ctermbg=NONE cterm=NONE
-hi VertSplit ctermfg=236 ctermbg=236 cterm=NONE
-hi Exception ctermfg=114 ctermbg=NONE cterm=bold
-hi Keyword ctermfg=114 ctermbg=NONE cterm=bold
-hi Type ctermfg=114 ctermbg=NONE cterm=bold
-hi DiffChange ctermfg=114 ctermbg=65 cterm=NONE
-hi Cursor ctermfg=65 ctermbg=114 cterm=NONE
-hi Error ctermfg=196 ctermbg=NONE cterm=NONE
-hi PMenu ctermfg=NONE ctermbg=235 cterm=NONE
-hi SpecialKey ctermfg=242 ctermbg=NONE cterm=NONE
-hi Constant ctermfg=120 ctermbg=NONE cterm=NONE
-hi Tag ctermfg=71 ctermbg=236 cterm=bold
-hi String ctermfg=114 ctermbg=238 cterm=NONE
-hi PMenuThumb ctermfg=NONE ctermbg=65 cterm=NONE
-hi Repeat ctermfg=114 ctermbg=NONE cterm=bold
-hi Directory ctermfg=114 ctermbg=NONE cterm=bold
-hi Structure ctermfg=114 ctermbg=NONE cterm=bold
-hi Macro ctermfg=114 ctermbg=NONE cterm=bold
-hi Underlined ctermfg=114 ctermbg=NONE cterm=underline
-hi DiffAdd ctermfg=114 ctermbg=65 cterm=NONE
-hi TabLine ctermfg=65 ctermbg=NONE cterm=bold
-hi cursorim ctermfg=65 ctermbg=114 cterm=NONE
-hi lcursor ctermfg=65 ctermbg=114 cterm=NONE
-hi condtional ctermfg=123 ctermbg=NONE cterm=NONE
-hi pmenum ctermfg=240 ctermbg=234 cterm=NONE
-hi char ctermfg=114 ctermbg=238 cterm=NONE
+" enable just for html/css
+let g:user_emmet_install_global=0
+autocmd Filetype html,css EmmetInstall
+
+if !has('gui_running')
+    set t_Co=256
+    hi IncSearch ctermfg=65 ctermbg=114 cterm=NONE
+    hi WildMenu ctermfg=65 ctermbg=114 cterm=NONE
+    hi SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE
+    hi SpecialComment ctermfg=71 ctermbg=236 cterm=bold
+    hi Typedef ctermfg=114 ctermbg=NONE cterm=bold
+    hi Title ctermfg=114 ctermbg=236 cterm=bold
+    hi Folded ctermfg=71 ctermbg=NONE cterm=NONE
+    hi PreCondit ctermfg=114 ctermbg=NONE cterm=bold
+    hi Include ctermfg=114 ctermbg=NONE cterm=bold
+    hi TabLineSel ctermfg=120 ctermbg=65 cterm=bold
+    hi StatusLineNC ctermfg=10 ctermbg=NONE cterm=bold,underline
+    hi NonText ctermfg=59 ctermbg=NONE cterm=NONE
+    hi DiffText ctermfg=114 ctermbg=65 cterm=bold
+    hi ErrorMsg ctermfg=196 ctermbg=NONE cterm=NONE
+    hi Debug ctermfg=71 ctermbg=236 cterm=bold
+    hi PMenuSbar ctermfg=NONE ctermbg=235 cterm=NONE
+    hi Identifier ctermfg=114 ctermbg=NONE cterm=NONE
+    hi SpecialChar ctermfg=71 ctermbg=236 cterm=bold
+    hi Conditional ctermfg=114 ctermbg=NONE cterm=bold
+    hi StorageClass ctermfg=114 ctermbg=NONE cterm=bold
+    hi Todo ctermfg=236 ctermbg=71 cterm=NONE
+    hi Special ctermfg=71 ctermbg=236 cterm=bold
+    hi LineNr ctermfg=65 ctermbg=NONE cterm=NONE
+    hi StatusLine ctermfg=120 ctermbg=65 cterm=bold
+    hi Normal ctermfg=71 ctermbg=NONE cterm=NONE
+    hi Label ctermfg=114 ctermbg=NONE cterm=bold
+    hi PMenuSel ctermfg=114 ctermbg=65 cterm=NONE
+    hi Search ctermfg=236 ctermbg=71 cterm=NONE
+    hi Delimiter ctermfg=71 ctermbg=236 cterm=bold
+    hi Statement ctermfg=120 ctermbg=NONE cterm=NONE
+    hi Comment ctermfg=65 ctermbg=NONE cterm=NONE
+    hi Character ctermfg=120 ctermbg=NONE cterm=NONE
+    hi Float ctermfg=114 ctermbg=238 cterm=NONE
+    hi Number ctermfg=114 ctermbg=238 cterm=NONE
+    hi Boolean ctermfg=114 ctermbg=238 cterm=NONE
+    hi Operator ctermfg=114 ctermbg=NONE cterm=bold
+    hi CursorLine ctermfg=NONE ctermbg=NONE cterm=underline
+    hi TabLineFill ctermfg=NONE ctermbg=NONE cterm=bold
+    hi Question ctermfg=71 ctermbg=NONE cterm=NONE
+    hi WarningMsg ctermfg=114 ctermbg=NONE cterm=NONE
+    hi VisualNOS ctermfg=71 ctermbg=NONE cterm=NONE
+    hi DiffDelete ctermfg=236 ctermbg=236 cterm=NONE
+    hi ModeMsg ctermfg=71 ctermbg=NONE cterm=NONE
+    hi Define ctermfg=114 ctermbg=NONE cterm=bold
+    hi Function ctermfg=114 ctermbg=NONE cterm=NONE
+    hi FoldColumn ctermfg=65 ctermbg=234 cterm=NONE
+    hi PreProc ctermfg=114 ctermbg=NONE cterm=bold
+    hi Visual ctermfg=114 ctermbg=65 cterm=NONE
+    hi MoreMsg ctermfg=71 ctermbg=NONE cterm=NONE
+    hi VertSplit ctermfg=236 ctermbg=236 cterm=NONE
+    hi Exception ctermfg=114 ctermbg=NONE cterm=bold
+    hi Keyword ctermfg=114 ctermbg=NONE cterm=bold
+    hi Type ctermfg=114 ctermbg=NONE cterm=bold
+    hi DiffChange ctermfg=114 ctermbg=65 cterm=NONE
+    hi Cursor ctermfg=65 ctermbg=114 cterm=NONE
+    hi Error ctermfg=196 ctermbg=NONE cterm=NONE
+    hi PMenu ctermfg=NONE ctermbg=235 cterm=NONE
+    hi SpecialKey ctermfg=242 ctermbg=NONE cterm=NONE
+    hi Constant ctermfg=120 ctermbg=NONE cterm=NONE
+    hi Tag ctermfg=71 ctermbg=236 cterm=bold
+    hi String ctermfg=114 ctermbg=238 cterm=NONE
+    hi PMenuThumb ctermfg=NONE ctermbg=65 cterm=NONE
+    hi Repeat ctermfg=114 ctermbg=NONE cterm=bold
+    hi Directory ctermfg=114 ctermbg=NONE cterm=bold
+    hi Structure ctermfg=114 ctermbg=NONE cterm=bold
+    hi Macro ctermfg=114 ctermbg=NONE cterm=bold
+    hi Underlined ctermfg=114 ctermbg=NONE cterm=underline
+    hi DiffAdd ctermfg=114 ctermbg=65 cterm=NONE
+    hi TabLine ctermfg=65 ctermbg=NONE cterm=bold
+    hi cursorim ctermfg=65 ctermbg=114 cterm=NONE
+    hi lcursor ctermfg=65 ctermbg=114 cterm=NONE
+    hi condtional ctermfg=123 ctermbg=NONE cterm=NONE
+    hi pmenum ctermfg=240 ctermbg=234 cterm=NONE
+    hi char ctermfg=114 ctermbg=238 cterm=NONE
+endif
 
