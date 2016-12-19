@@ -121,18 +121,18 @@
   :ensure t
   :pin melpa-stable)
 
-(use-package evil
-  :ensure t
-  :config
-  (progn
-    (define-key evil-normal-state-map [escape] 'keyboard-quit)
-    (define-key evil-visual-state-map [escape] 'keyboard-quit)
-    (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-    (evil-mode t)))
+;;(use-package evil
+;;  :ensure t
+;;  :config
+;;  (progn
+;;    (define-key evil-normal-state-map [escape] 'keyboard-quit)
+;;    (define-key evil-visual-state-map [escape] 'keyboard-quit)
+;;    (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+;;    (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+;;    (evil-mode t)))
 
 ;; enable helm
 (use-package helm
@@ -179,9 +179,14 @@
 ;; disables ido mode
 (ido-mode -1)
 
+(use-package visual-regexp
+  :ensure t
+  :bind ("C-c r" . vr/replace))
+
 (use-package undo-tree
   :diminish undo-tree-mode
   :ensure t
+  :bind ("s-/" . undo-tree-visualize)
   :config
   (progn
     (global-undo-tree-mode t)
@@ -273,7 +278,8 @@
 (use-package avy
   :ensure t
   :config
-  (avy-setup-default))
+  (global-set-key (kbd "C-:") 'avy-goto-char)
+  (global-set-key (kbd "C-'") 'avy-goto-char-2))
 
 (use-package linum-relative
   :ensure t
@@ -290,16 +296,16 @@
   (progn
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
-(use-package whitespace
-  :init
-  (dolist (hook '(prog-mode-hook text-mode-hook))
-    (add-hook hook #'whitespace-mode))
-  (add-hook 'before-save-hook #'whitespace-cleanup)
-  :config
-  (progn
-    (setq whitespace-line-column 80
-          whitespace-style
-          '(face tabs empty trailing lines-tail))))
+;;(use-package whitespace
+;;  :init
+;;  (dolist (hook '(prog-mode-hook text-mode-hook))
+;;    (add-hook hook #'whitespace-mode))
+;;  (add-hook 'before-save-hook #'whitespace-cleanup)
+;;  :config
+;;  (progn
+;;    (setq whitespace-line-column 80
+;;          whitespace-style
+;;          '(face tabs empty trailing lines-tail))))
 
 (use-package aggressive-indent
   :ensure t
@@ -325,6 +331,78 @@
   :config
   (which-key-mode t))
 
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :commands yas-minor-mode
+  :config (yas-reload-all))
+
+(use-package goto-chg
+  :commands goto-last-change
+  :bind (("C-." . goto-last-change)
+         ("C-," . goto-last-change-reverse)))
+
+(use-package indent-guide
+  :ensure t
+  :config
+  (indent-guide-global-mode t))
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+(defun indent-buffer ()
+  "Indent the entire buffer."
+  (interactive)
+  (save-excursion
+    (delete-trailing-whitespace)
+    (indent-region (point-min) (point-max) nil)
+    (untabify (point-min) (point-max))))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (company-mode +1))
+
+(use-package expand-region
+  :commands 'er/expand-region
+  :bind ("C-=" . er/expand-region))
+
+(use-package js2-mode
+  :ensure t)
+
+(use-package eldoc
+  :ensure nil
+  :diminish eldoc-mode
+  :commands eldoc-mode)
+
+(use-package tide
+  :ensure t
+  :config
+  (progn
+    (setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+    (add-hook 'typescript-mode-hook 'setup-tide-mode)))
+
+(use-package web-mode
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+    (add-hook 'web-mode-hook
+              (lambda ()
+                (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                  (setup-tide-mode))))))
+
+(add-hook 'scala-mode-hook
+          (lambda ()
+            (show-paren-mode)
+            (smartparens-mode)
+            (yas-minor-mode)
+            (company-mode)
+            (ensime-mode)
+            (scala-mode:goto-start-of-code)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
