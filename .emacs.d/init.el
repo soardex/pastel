@@ -68,13 +68,17 @@
  scroll-error-top-bottom t
  show-paren-delay 0.5
  use-package-always-ensure t
- sentence-end-double-space nil)
+ sentence-end-double-space nil
+ css-indent-offset 2)
 
 ;; encoding settings
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
+;; deleted marked text on type
+(delete-selection-mode t)
 
 ;; buffer local variables
 (setq-default c-basic-offset 2)
@@ -198,7 +202,8 @@
   :ensure t
   :config
   (progn
-    (setq projectile-enable-caching t
+    (setq projectile-enable-caching nil
+          projectile-switch-project-action 'projectile-dired
           projectile-verbose nil)
     (projectile-global-mode t)))
 
@@ -390,6 +395,7 @@
   :config
   (progn
     (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.scala.html\\'" . web-mode))
     (add-hook 'web-mode-hook
               (lambda ()
                 (when (string-equal "tsx" (file-name-extension buffer-file-name))
@@ -403,6 +409,10 @@
             (company-mode)
             (ensime-mode)
             (scala-mode:goto-start-of-code)))
+
+;; set modes for unknown mode file extensions
+(add-to-list 'auto-mode-alist '("\\.less\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.sbt\\'" . sbt-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
